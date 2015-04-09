@@ -4,6 +4,7 @@ class Experiment
 
   constructor: (@name, @store) ->
     @_variants = []
+    @seedFunction = -> Math.random()
 
   variant: (name, pct, value) ->
     [value, pct] = [pct, 100] unless value?
@@ -24,7 +25,7 @@ class Experiment
 
       # make the choice
       i = 0
-      rand = Math.random() * (100 - 1) + 1
+      rand = @seedFunction() * (100 - 1) + 1
       for variant in @_variants
         i += variant.pct
         if i >= rand
